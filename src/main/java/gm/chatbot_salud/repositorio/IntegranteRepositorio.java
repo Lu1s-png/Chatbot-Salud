@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IntegranteRepositorio extends JpaRepository <Integer, Integer> {
+public interface IntegranteRepositorio extends JpaRepository <Integrante, Integer> {
     List<Integrante> findByNombre (String nombre);
 }
