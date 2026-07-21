@@ -1,6 +1,7 @@
 package gm.chatbot_salud.servicio;
 
 import gm.chatbot_salud.modelo.Integrante;
+import gm.chatbot_salud.repositorio.FamiliaRepositorio;
 import gm.chatbot_salud.repositorio.IntegranteRepositorio;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public class IntegranteServicio {
     private final IntegranteRepositorio integranteRepositorio;
 
-    public IntegranteServicio(IntegranteRepositorio integranteRepositorio) {
+    public IntegranteServicio(IntegranteRepositorio integranteRepositorio, FamiliaRepositorio familiaRepositorio) {
         this.integranteRepositorio = integranteRepositorio;
     }
 

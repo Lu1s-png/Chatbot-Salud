@@ -1,35 +1,37 @@
 package gm.chatbot_salud.modelo;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Setter
 @Getter
-@Entity
+@Document(collection = "medicamento")
 public class Medicamento {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idMedicamento;
+    private String nombreMedicamento;
+    private String frecuencia;
 
-    Integer idMedicamento;
-    String nombreMedicamento;
-    String tratamientoMedicamento;
-
-    @ManyToOne
-    @JoinColumn(name = "id_integrante")
+    @DBRef
     private Integrante integrante;
-    private Medicamento(){}
 
-    public Medicamento(Integer idMedicamento) {
+    public Medicamento(){
+    }
+
+    public Medicamento(Integer idMedicamento){
         this.idMedicamento = idMedicamento;
     }
 
     @Override
     public String toString() {
         return "Medicamento{" +
-                "idMedicamento=" + idMedicamento +
+                "idMedicamento='" + idMedicamento + '\'' +
                 ", nombreMedicamento='" + nombreMedicamento + '\'' +
-                ", tratamientoMedicamento='" + tratamientoMedicamento + '\'' +
+                ", frecuencia='" + frecuencia + '\'' +
+                ", integrante=" + integrante +
                 '}';
     }
 }

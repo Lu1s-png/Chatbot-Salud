@@ -1,27 +1,32 @@
 package gm.chatbot_salud.modelo;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
-// Historial de enfermedades de cada integrante de la familia
 @Setter
 @Getter
-@Entity
+@Document(collection = "enfermedades")
 public class Enfermedad {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idEnfermedad;
-    String tipoEnfermedad;
-    LocalDate fechaEnfermedad;
-    String descripcionEnfermedad;
 
-    @ManyToOne
-    @JoinColumn(name = "id-integrante")
+    @Id
+    private Integer idEnfermedad;
+
+    private String nombreEnfermedad;
+
+    private String descripcion;
+
+    private LocalDate fechaEnfermedad;
+
+    @DBRef
     private Integrante integrante;
-    private Enfermedad(){}
+
+    public Enfermedad() {
+    }
 
     public Enfermedad(Integer idEnfermedad) {
         this.idEnfermedad = idEnfermedad;
@@ -30,10 +35,11 @@ public class Enfermedad {
     @Override
     public String toString() {
         return "Enfermedad{" +
-                "idEnfermedad=" + idEnfermedad +
-                ", tipoEnfermedad='" + tipoEnfermedad + '\'' +
+                "idEnfermedad='" + idEnfermedad + '\'' +
+                ", nombreEnfermedad='" + nombreEnfermedad + '\'' +
+                ", descripcion='" + descripcion + '\'' +
                 ", fechaEnfermedad=" + fechaEnfermedad +
-                ", descripcionEnfermedad='" + descripcionEnfermedad + '\'' +
+                ", integrante=" + integrante +
                 '}';
     }
 }

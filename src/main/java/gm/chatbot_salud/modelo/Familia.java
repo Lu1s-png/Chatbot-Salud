@@ -1,26 +1,22 @@
 package gm.chatbot_salud.modelo;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Setter
 @Getter
-@Entity
+@Document(collection = "familia")
 public class Familia {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @Id
     private Integer idFamilia;
+
     private String nombreFamilia;
 
-    @OneToMany(mappedBy = "familia", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Integrante> integrantes = new ArrayList<>();
-
-    public Familia() {}
+    public Familia() {
+    }
 
     public Familia(Integer idFamilia) {
         this.idFamilia = idFamilia;
@@ -29,7 +25,7 @@ public class Familia {
     @Override
     public String toString() {
         return "Familia{" +
-                "idFamilia=" + idFamilia +
+                "idFamilia='" + idFamilia + '\'' +
                 ", nombreFamilia='" + nombreFamilia + '\'' +
                 '}';
     }

@@ -1,43 +1,39 @@
 package gm.chatbot_salud.modelo;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Setter
 @Getter
-@Entity
+@Document(collection = "citas_medicas")
 public class CitaMedica {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer idCitaMedica;
-    private String lugarCita;
-    private String direccion;
-    private LocalDate fechaCita;
+    private String tipoCita;
+    private LocalDate fecha;
     private LocalTime hora;
+    private String lugarCita;
 
-    @ManyToOne
-    @JoinColumn(name = "id_integrante")
+    @DBRef
     private Integrante integrante;
 
-    public CitaMedica (){}
-
-    public CitaMedica(Integer idCitaMedica) {
-        this.idCitaMedica = idCitaMedica;
+    public CitaMedica() {
     }
 
     @Override
     public String toString() {
         return "CitaMedica{" +
-                "idCitaMedica=" + idCitaMedica +
-                ", lugarCita='" + lugarCita + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", fechaCita=" + fechaCita +
+                "idCitaMedica='" + idCitaMedica + '\'' +
+                ", tipoCita='" + tipoCita + '\'' +
+                ", fecha=" + fecha +
                 ", hora=" + hora +
+                ", lugarCita='" + lugarCita + '\'' +
+                ", integrante=" + integrante +
                 '}';
     }
 }
