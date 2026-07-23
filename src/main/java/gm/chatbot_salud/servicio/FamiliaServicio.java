@@ -8,29 +8,30 @@ import java.util.List;
 
 @Service
 public class FamiliaServicio {
+
     private final FamiliaRepositorio familiaRepositorio;
 
     public FamiliaServicio(FamiliaRepositorio familiaRepositorio) {
         this.familiaRepositorio = familiaRepositorio;
     }
 
-    // Listar
-    public List<Familia> listarFamilias(){
+    public List<Familia> listarFamilias() {
         return familiaRepositorio.findAll();
     }
 
-    // Buscar por id
-    public Familia buscarPorId (Integer id){
+    // buscar
+    public Familia buscarPorId(String id) {
         return familiaRepositorio.findById(id).orElse(null);
     }
 
-    // Guardar
-    public Familia guardar (Familia familia){
+    // guardar
+    public Familia guardar(Familia familia) {
         return familiaRepositorio.save(familia);
     }
 
-    // Eliminar
-    public void eliminar (Integer id){
+    // eliminar
+    public void eliminar(String id) {
         familiaRepositorio.deleteById(id);
     }
+
 }

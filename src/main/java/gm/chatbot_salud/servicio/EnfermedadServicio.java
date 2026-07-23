@@ -18,7 +18,7 @@ public class EnfermedadServicio {
         return enfermedadRepositorio.findAll();
     }
 
-    public Enfermedad buscarPorId(Integer id) {
+    public Enfermedad buscarPorId(String id) {
         return enfermedadRepositorio.findById(id).orElse(null);
     }
 
@@ -26,7 +26,7 @@ public class EnfermedadServicio {
         return enfermedadRepositorio.save(enfermedad);
     }
 
-    public void eliminar(Integer id) {
+    public void eliminar(String id) {
         enfermedadRepositorio.deleteById(id);
     }
 }

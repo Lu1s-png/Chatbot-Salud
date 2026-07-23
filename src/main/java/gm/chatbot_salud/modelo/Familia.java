@@ -7,18 +7,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Setter
 @Getter
-@Document(collection = "familia")
+@Document(collection = "familias")
 public class Familia {
 
     @Id
-    private Integer idFamilia;
+    private String idFamilia;
 
     private String nombreFamilia;
 
     public Familia() {
     }
 
-    public Familia(Integer idFamilia) {
+    public Familia(String idFamilia) {
         this.idFamilia = idFamilia;
     }
 

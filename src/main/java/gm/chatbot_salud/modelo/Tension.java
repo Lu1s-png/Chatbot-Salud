@@ -5,36 +5,37 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Setter
 @Getter
-@Document(collection = "citas_medicas")
-public class CitaMedica {
+@Setter
+@Document(collection = "tensiones")
+public class Tension {
+
     @Id
-    private String idCitaMedica;
-    private String tipoCita;
+    private String idTension;
+
+    private Integer sistolica;
+    private Integer diastolica;
     private LocalDate fecha;
     private LocalTime hora;
-    private String lugarCita;
-    private String estado;
 
     @DBRef
     private Integrante integrante;
 
-    public CitaMedica() {
+    public Tension() {
     }
 
     @Override
     public String toString() {
-        return "CitaMedica{" +
-                "idCitaMedica='" + idCitaMedica + '\'' +
-                ", tipoCita='" + tipoCita + '\'' +
+        return "Tension{" +
+                "idTension='" + idTension + '\'' +
+                ", sistolica=" + sistolica +
+                ", diastolica=" + diastolica +
                 ", fecha=" + fecha +
                 ", hora=" + hora +
-                ", lugarCita='" + lugarCita + '\'' +
-                ", estado='" + estado + '\'' +
                 ", integrante=" + (integrante != null ? integrante.getNombre() : null) +
                 '}';
     }

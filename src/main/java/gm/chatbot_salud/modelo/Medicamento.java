@@ -8,12 +8,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Setter
 @Getter
-@Document(collection = "medicamento")
+@Document(collection = "medicamentos")
 public class Medicamento {
     @Id
-    private Integer idMedicamento;
+    private String idMedicamento;
     private String nombreMedicamento;
     private String frecuencia;
+    private String horario;
 
     @DBRef
     private Integrante integrante;
@@ -21,7 +22,7 @@ public class Medicamento {
     public Medicamento(){
     }
 
-    public Medicamento(Integer idMedicamento){
+    public Medicamento(String idMedicamento){
         this.idMedicamento = idMedicamento;
     }
 
@@ -31,7 +32,8 @@ public class Medicamento {
                 "idMedicamento='" + idMedicamento + '\'' +
                 ", nombreMedicamento='" + nombreMedicamento + '\'' +
                 ", frecuencia='" + frecuencia + '\'' +
-                ", integrante=" + integrante +
+                ", horario='" + horario + '\'' +
+                ", integrante=" + (integrante != null ? integrante.getNombre() : null) +
                 '}';
     }
 }

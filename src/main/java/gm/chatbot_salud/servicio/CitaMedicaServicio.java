@@ -18,7 +18,7 @@ public class CitaMedicaServicio {
         return citaMedicaRepositorio.findAll();
     }
 
-    public CitaMedica buscarPorId (Integer id){
+    public CitaMedica buscarPorId (String id){
         return citaMedicaRepositorio.findById(id).orElse(null);
     }
 
@@ -26,7 +26,7 @@ public class CitaMedicaServicio {
         return citaMedicaRepositorio.save(citaMedica);
     }
 
-    public void eliminar (Integer id){
+    public void eliminar (String id){
         citaMedicaRepositorio.deleteById(id);
     }
 }

@@ -3,7 +3,13 @@ package gm.chatbot_salud.servicio;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WhatsAppService {
+public class WhatsAppServicio {
+
+    private final IntegranteServicio integranteServicio;
+
+    public WhatsAppServicio(IntegranteServicio integranteServicio){
+        this.integranteServicio = integranteServicio;
+    }
 
     /**
      * Procesa el mensaje recibido desde WhatsApp.
@@ -26,6 +32,15 @@ public class WhatsAppService {
 
             case "/agregar":
                 return mostrarMenuAgregar();
+                
+            case "integrante":
+                return """
+                        Escriba el nombre del nuevo integrante.
+                        
+                        Ejemplo:
+                        
+                        agregar integrante Juan
+                        """;
 
             case "/editar":
                 return mostrarMenuEditar();
@@ -37,7 +52,16 @@ public class WhatsAppService {
                 return mostrarMenuConsultar();
 
             default:
-                return "Comando no reconocido.\n\nEscriba @chatbot para iniciar.";
+                if (mensaje.startsWith("agregar integrante")){
+                    String nombre = mensaje.substring(20).trim();
+                    
+                    return agregarIntegrante(nombre);
+                }
+                return """
+                        No entendi el comando.
+                        
+                        Escriban @chatbot para iniciar la conversación
+                        """;
         }
     }
 
@@ -65,10 +89,11 @@ public class WhatsAppService {
 
         return """
                 ¿Qué desea agregar?
-
-                1. Enfermedad
-                2. Medicamento
-                3. Cita Médica
+                
+                1. Integrante
+                2. Enfermedad
+                3. Medicamento
+                4. Cita Médica
 
                 Escriba el nombre de la opción.
                 """;

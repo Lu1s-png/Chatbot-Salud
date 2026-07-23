@@ -19,7 +19,7 @@ public class MedicamentoServicio {
         return medicamentoRepositorio.findAll();
     }
 
-    public Medicamento buscarPorId(Integer id) {
+    public Medicamento buscarPorId(String id) {
         return medicamentoRepositorio.findById(id).orElse(null);
     }
 
@@ -27,7 +27,8 @@ public class MedicamentoServicio {
         return medicamentoRepositorio.save(medicamento);
     }
 
-    public void eliminar(Integer id) {
+    public void eliminar(String id) {
         medicamentoRepositorio.deleteById(id);
     }
+
 }

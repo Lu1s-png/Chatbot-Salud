@@ -14,11 +14,11 @@ import java.time.LocalDate;
 public class Enfermedad {
 
     @Id
-    private Integer idEnfermedad;
+    private String idEnfermedad;
 
     private String nombreEnfermedad;
 
-    private String descripcion;
+    private String observaciones;
 
     private LocalDate fechaEnfermedad;
 
@@ -28,7 +28,7 @@ public class Enfermedad {
     public Enfermedad() {
     }
 
-    public Enfermedad(Integer idEnfermedad) {
+    public Enfermedad(String idEnfermedad) {
         this.idEnfermedad = idEnfermedad;
     }
 
@@ -37,9 +37,9 @@ public class Enfermedad {
         return "Enfermedad{" +
                 "idEnfermedad='" + idEnfermedad + '\'' +
                 ", nombreEnfermedad='" + nombreEnfermedad + '\'' +
-                ", descripcion='" + descripcion + '\'' +
+                ", descripcion='" + observaciones + '\'' +
                 ", fechaEnfermedad=" + fechaEnfermedad +
-                ", integrante=" + integrante +
+                ", integrante=" + (integrante != null ? integrante.getNombre() : null) +
                 '}';
     }
 }

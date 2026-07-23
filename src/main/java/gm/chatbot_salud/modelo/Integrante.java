@@ -6,14 +6,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+
 
 @Setter
 @Getter
-@Document(collection = "integrante")
+@Document(collection = "integrantes")
 public class Integrante{
    @Id
-    private Integer idIntegrante;
+    private String idIntegrante;
 
    private String nombre;
 
@@ -23,7 +23,7 @@ public class Integrante{
    public Integrante(){
    }
 
-   public Integrante(Integer idIntegrante){
+   public Integrante(String idIntegrante){
        this.idIntegrante = idIntegrante;
    }
 
