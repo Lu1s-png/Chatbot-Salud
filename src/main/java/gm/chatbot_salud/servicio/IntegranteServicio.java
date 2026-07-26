@@ -31,7 +31,8 @@ public class IntegranteServicio {
     }
 
     public Integrante buscarPorId(String id) {
-        return integranteRepositorio.findById(id).orElse(null);
+        return integranteRepositorio.findById(id).
+                orElseThrow(() -> new RuntimeException("Integrante no encontrado"));
     }
 
     public Integrante guardar(Integrante integrante) {

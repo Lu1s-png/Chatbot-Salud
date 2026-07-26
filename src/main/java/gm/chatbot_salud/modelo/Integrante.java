@@ -15,7 +15,7 @@ public class Integrante{
    @Id
     private String idIntegrante;
 
-   private String nombre;
+    private String nombre;
 
    @DBRef
     private Familia familia;

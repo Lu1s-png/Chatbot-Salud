@@ -22,7 +22,7 @@ public class CitaMedicaControlador {
     @GetMapping("/{id}")
     public CitaMedica obtenerPorId(@PathVariable String id){
         return citaMedicaRepositorio.findById(id).
-                orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                orElseThrow(() -> new RuntimeException("Cita medica no encontrada"));
     }
 
     @PostMapping
@@ -30,7 +30,7 @@ public class CitaMedicaControlador {
         return citaMedicaRepositorio.save(citaMedica);
     }
 
-    @PutMapping("/{}id")
+    @PutMapping("/{id}")
     public CitaMedica actualizarCitaMedica
             (@PathVariable String id, @RequestBody CitaMedica detalleCita){
         CitaMedica citaMedica = citaMedicaRepositorio.findById(id).
