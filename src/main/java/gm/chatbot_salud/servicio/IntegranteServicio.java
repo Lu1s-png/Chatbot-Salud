@@ -7,7 +7,6 @@ import gm.chatbot_salud.repositorio.IntegranteRepositorio;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class IntegranteServicio {
@@ -56,6 +55,10 @@ public class IntegranteServicio {
         integrante.setNombre(nombre);
         integrante.setFamilia(familia);
 
+        return integranteRepositorio.save(integrante);
+    }
+
+    public Integrante actualizar(Integrante integrante){
         return integranteRepositorio.save(integrante);
     }
 

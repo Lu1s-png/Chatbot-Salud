@@ -1,8 +1,7 @@
 package gm.chatbot_salud.controlador;
 
 import gm.chatbot_salud.modelo.Tension;
-import gm.chatbot_salud.repositorio.TensionRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
+import gm.chatbot_salud.servicio.TensionServicio;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,42 +9,39 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tensiones")
 public class TensionControlador {
-    @Autowired
-    private TensionRepositorio tensionRepositorio;
+
+    private final TensionServicio tensionServicio;
+
+    public TensionControlador(TensionServicio tensionServicio){
+        this.tensionServicio = tensionServicio;
+    }
 
     @GetMapping
-    public List<Tension> obtenerTension() {
-        return tensionRepositorio.findAll();
+    public List<Tension> listarTension() {
+        return tensionServicio.listarTensiones();
     }
 
     @GetMapping("/{id}")
-    public Tension obtenerPorId(@PathVariable String id){
-        return tensionRepositorio.findById(id).
-                orElseThrow(() -> new RuntimeException("Tension no encontrado"));
+    public Tension buscaPorId(@PathVariable String id){
+        return tensionServicio.buscarPorId(id);
     }
 
     @PostMapping
     public Tension crearTencion(@RequestBody Tension tension){
-        return tensionRepositorio.save(tension);
+        return tensionServicio.guardar(tension);
     }
 
     @PutMapping("/{id}")
     public Tension actualizarTension(@PathVariable String id,
                                      @RequestBody Tension detalleTension){
-        Tension tension = tensionRepositorio.findById(id).
-                orElseThrow(() -> new RuntimeException("tension no encontrado"));
 
-        tension.setSistolica(detalleTension.getSistolica());
-        tension.setDiastolica(detalleTension.getDiastolica());
-        tension.setFecha(detalleTension.getFecha());
-        tension.setHora(detalleTension.getHora());
-
-        return tensionRepositorio.save(tension);
+        detalleTension.setIdTension(id);
+        return tensionServicio.actualizar(detalleTension);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public String eliminarTension(@PathVariable String id){
-        tensionRepositorio.deleteById(id);
+        tensionServicio.eliminar(id);
 
         return "La tension a sido elimana exitosamente";
     }

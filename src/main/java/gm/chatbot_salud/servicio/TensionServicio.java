@@ -26,6 +26,10 @@ public class TensionServicio {
         return tensionRepositorio.save(tension);
     }
 
+    public Tension actualizar(Tension tension){
+        return tensionRepositorio.save(tension);
+    }
+
     public void eliminar(String id) {
         tensionRepositorio.deleteById(id);
     }

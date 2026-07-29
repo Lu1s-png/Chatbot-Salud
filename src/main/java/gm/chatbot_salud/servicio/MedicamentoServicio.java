@@ -27,6 +27,10 @@ public class MedicamentoServicio {
         return medicamentoRepositorio.save(medicamento);
     }
 
+    public Medicamento actualizar(Medicamento medicamento){
+        return medicamentoRepositorio.save(medicamento);
+    }
+
     public void eliminar(String id) {
         medicamentoRepositorio.deleteById(id);
     }

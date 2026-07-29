@@ -26,6 +26,10 @@ public class EnfermedadServicio {
         return enfermedadRepositorio.save(enfermedad);
     }
 
+    public Enfermedad actualizar(Enfermedad enfermedad){
+        return enfermedadRepositorio.save(enfermedad);
+    }
+
     public void eliminar(String id) {
         enfermedadRepositorio.deleteById(id);
     }

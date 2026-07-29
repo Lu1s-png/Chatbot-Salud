@@ -1,8 +1,7 @@
 package gm.chatbot_salud.controlador;
 
 import gm.chatbot_salud.modelo.Medicamento;
-import gm.chatbot_salud.repositorio.MedicamentoRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
+import gm.chatbot_salud.servicio.MedicamentoServicio;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,41 +10,39 @@ import java.util.List;
 @RequestMapping("/api/medicamentos")
 
 public class MedicamentoControlador {
-    @Autowired
-    public MedicamentoRepositorio medicamentoRepositorio;
+
+    private final MedicamentoServicio medicamentoServicio;
+
+    public MedicamentoControlador(MedicamentoServicio medicamentoServicio){
+        this.medicamentoServicio = medicamentoServicio;
+    }
 
     @GetMapping
-    public List<Medicamento> obtenerMedicamento(){
-        return medicamentoRepositorio.findAll();
+    public List<Medicamento> listarMedicamentos(){
+        return medicamentoServicio.listarMedicamentos();
     }
 
     @GetMapping("/{id}")
-    public Medicamento obtenerPorId(@PathVariable String id){
-        return medicamentoRepositorio.findById(id).
-                orElseThrow(() -> new RuntimeException("Medicamento no encontrado"));
+    public Medicamento buscarPorId(@PathVariable String id){
+        return medicamentoServicio.buscarPorId(id);
     }
 
     @PostMapping
     public Medicamento crearMedicamento(@RequestBody Medicamento medicamento){
-        return medicamentoRepositorio.save(medicamento);
+        return medicamentoServicio.guardar(medicamento);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public Medicamento actualizarMedicamento
             (@PathVariable String id, @RequestBody Medicamento detalleMedicamento) {
-     Medicamento medicamento = medicamentoRepositorio.findById(id).
-             orElseThrow(()-> new RuntimeException("medicamento no encontrado"));
 
-     medicamento.setNombreMedicamento(detalleMedicamento.getNombreMedicamento());
-     medicamento.setFrecuencia(detalleMedicamento.getFrecuencia());
-     medicamento.setHorario(detalleMedicamento.getHorario());
-
-     return medicamentoRepositorio.save(medicamento);
+        detalleMedicamento.setIdMedicamento(id);
+     return medicamentoServicio.actualizar(detalleMedicamento);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public String eliminarMedicamento(@PathVariable String id){
-        medicamentoRepositorio.deleteById(id);
+        medicamentoServicio.eliminar(id);
         return "Medicamento eliminado extosamente";
     }
 }

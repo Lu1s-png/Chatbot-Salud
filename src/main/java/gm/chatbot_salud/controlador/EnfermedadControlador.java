@@ -1,8 +1,7 @@
 package gm.chatbot_salud.controlador;
 
 import gm.chatbot_salud.modelo.Enfermedad;
-import gm.chatbot_salud.repositorio.EnfermedadRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
+import gm.chatbot_salud.servicio.EnfermedadServicio;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,42 +9,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/enfermedades")
 public class EnfermedadControlador {
-    @Autowired
-    private EnfermedadRepositorio enfermedadRepositorio;
+
+
+    private final EnfermedadServicio enfermedadServicio;
+
+    public EnfermedadControlador(EnfermedadServicio enfermedadServicio){
+        this.enfermedadServicio = enfermedadServicio;
+    }
 
     @GetMapping
     public List<Enfermedad>obtenerEnfermedad(){
-        return enfermedadRepositorio.findAll();
+        return enfermedadServicio.listarEnfermedades();
     }
 
     @GetMapping("/{id}")
     public Enfermedad obtenerPorId(@PathVariable String id){
-        return enfermedadRepositorio.findById(id).
-                orElseThrow(() -> new RuntimeException("Enfermedad no encontrada"));
+        return enfermedadServicio.buscarPorId(id);
     }
 
     @PostMapping
     public Enfermedad crearEnfermedad(@RequestBody Enfermedad enfermedad){
-        return enfermedadRepositorio.save(enfermedad);
+        return enfermedadServicio.guardar(enfermedad);
     }
 
     @PutMapping("/{id}")
     public Enfermedad actualizarEnfermedad
             (@PathVariable String id, @RequestBody Enfermedad detalleEnfermedad){
-        Enfermedad enfermedad = enfermedadRepositorio.findById(id).orElseThrow
-                (() -> new RuntimeException("Enfermedad no encontrada para actualizar"));
 
-        enfermedad.setNombreEnfermedad(detalleEnfermedad.getNombreEnfermedad());
-        enfermedad.setObservaciones(detalleEnfermedad.getObservaciones());
-        enfermedad.setFechaEnfermedad(detalleEnfermedad.getFechaEnfermedad());
-        enfermedad.setIntegrante(detalleEnfermedad.getIntegrante());
-
-        return enfermedadRepositorio.save(enfermedad);
+        detalleEnfermedad.setIdEnfermedad(id);
+        return enfermedadServicio.actualizar(detalleEnfermedad);
     }
 
     @DeleteMapping("/{id}")
-    public String elimarFamilia (@PathVariable String id){
-        enfermedadRepositorio.deleteById(id);
+    public String elimarEnfermedad (@PathVariable String id){
+        enfermedadServicio.eliminar(id);
         return "Enfermedad eliminada correctamente" + id;
     }
 }

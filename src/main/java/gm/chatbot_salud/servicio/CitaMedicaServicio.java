@@ -26,6 +26,10 @@ public class CitaMedicaServicio {
         return citaMedicaRepositorio.save(citaMedica);
     }
 
+    public CitaMedica actualizar (CitaMedica citaMedica){
+        return citaMedicaRepositorio.save(citaMedica);
+    }
+
     public void eliminar (String id){
         citaMedicaRepositorio.deleteById(id);
     }

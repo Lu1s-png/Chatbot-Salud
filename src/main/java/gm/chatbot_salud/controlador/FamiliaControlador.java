@@ -1,8 +1,7 @@
 package gm.chatbot_salud.controlador;
 
 import gm.chatbot_salud.modelo.Familia;
-import gm.chatbot_salud.repositorio.FamiliaRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
+import gm.chatbot_salud.servicio.FamiliaServicio;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,22 +10,32 @@ import java.util.List;
 @RequestMapping("/api/familias")
 
 public class FamiliaControlador {
-    @Autowired
-    private FamiliaRepositorio familiaRepositorio;
+
+    private final FamiliaServicio familiaServicio;
+
+    public FamiliaControlador(FamiliaServicio familiaServicio){
+        this.familiaServicio = familiaServicio;
+    }
 
     @GetMapping
-    public List<Familia> obtenerFamilia(){
-        return familiaRepositorio.findAll();
+    public List<Familia> listarFamilias(){
+        return familiaServicio.listarFamilias();
     }
 
     @GetMapping("/{id}")
-    public Familia obtenerPorId(@PathVariable String id){
-        return familiaRepositorio.findById(id).
-                orElseThrow(() -> new RuntimeException("Familia no encontrada"));
+    public Familia buscarPorId(@PathVariable String id){
+        return familiaServicio.buscarPorId(id);
     }
 
     @PostMapping
     public Familia crearFamilia (@RequestBody Familia familia){
-        return familiaRepositorio.save(familia);
+        return familiaServicio.guardar(familia);
+    }
+
+    @DeleteMapping("/{id}")
+    public String eliminarFamilia(@PathVariable String id){
+        familiaServicio.eliminar(id);
+
+        return "Familia eliminada correctamente";
     }
 }
