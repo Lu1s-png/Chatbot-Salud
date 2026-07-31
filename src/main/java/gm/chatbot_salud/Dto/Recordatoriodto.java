@@ -5,8 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ConsultaDTO {
-    private String idIntegramte;
+public class Recordatoriodto {
 
-    private String tipoConsulta;
 }

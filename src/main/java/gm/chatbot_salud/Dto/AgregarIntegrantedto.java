@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AgregarIntegranteDTO {
+public class AgregarIntegrantedto {
     private String idFamilia;
     private String nombre;
 }

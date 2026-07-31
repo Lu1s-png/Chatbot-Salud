@@ -1,5 +1,6 @@
 package gm.chatbot_salud.servicio;
 
+import gm.chatbot_salud.Excepciones.RecursoNoEncontradoExcepcion;
 import gm.chatbot_salud.modelo.Medicamento;
 import gm.chatbot_salud.repositorio.MedicamentoRepositorio;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,9 @@ public class MedicamentoServicio {
     }
 
     public Medicamento buscarPorId(String id) {
-        return medicamentoRepositorio.findById(id).orElse(null);
+        return medicamentoRepositorio.findById(id).
+                orElseThrow(() -> new RecursoNoEncontradoExcepcion
+                        ("Medicamento no encontrado"));
     }
 
     public Medicamento guardar(Medicamento medicamento) {

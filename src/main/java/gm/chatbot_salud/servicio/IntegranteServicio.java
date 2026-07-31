@@ -1,5 +1,8 @@
 package gm.chatbot_salud.servicio;
 
+import gm.chatbot_salud.Excepciones.FamiliaNoEncontradaExcepcion;
+import gm.chatbot_salud.Excepciones.IntegranteNoEncontradoExcepcion;
+import gm.chatbot_salud.Excepciones.LimiteIntegrantesExcepcion;
 import gm.chatbot_salud.modelo.Familia;
 import gm.chatbot_salud.modelo.Integrante;
 import gm.chatbot_salud.repositorio.FamiliaRepositorio;
@@ -31,27 +34,29 @@ public class IntegranteServicio {
 
     public Integrante buscarPorId(String id) {
         return integranteRepositorio.findById(id).
-                orElseThrow(() -> new RuntimeException("Integrante no encontrado"));
+                orElseThrow(() -> new IntegranteNoEncontradoExcepcion(
+                        "Integrante no encontrado"));
     }
 
     public Integrante guardar(Integrante integrante) {
         return integranteRepositorio.save(integrante);
     }
 
-    public Integrante agregarIntegrante(String idFamilia, String nombre) {
+    public Integrante agregarIntegrante( String nombre) {
 
-        Familia familia = familiaRepositorio.findById(idFamilia)
-                .orElseThrow(() ->
-                        new RuntimeException("Familia no encontrada."));
+        Familia familia = familiaRepositorio.findAll()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new FamiliaNoEncontradaExcepcion
+                        ("No existe una familia registrada."));
 
         List<Integrante> integrantes = integranteRepositorio.findByFamilia(familia);
-
-        if (integrantes.size() >= 6) {
-            throw new RuntimeException("La familia ya tiene el máximo de 6 integrantes.");
+        if (integrantes.size() >= 6){
+            throw new LimiteIntegrantesExcepcion
+                    ("La familia ya tiene el maximo de 6 integrantes");
         }
 
         Integrante integrante = new Integrante();
-
         integrante.setNombre(nombre);
         integrante.setFamilia(familia);
 

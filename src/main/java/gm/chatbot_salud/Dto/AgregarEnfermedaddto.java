@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class AgregarEnfermedadDTO {
+public class AgregarEnfermedaddto {
     private String idIntegrante;
     private String nomnreEnfermedad;
     private String observaciones;

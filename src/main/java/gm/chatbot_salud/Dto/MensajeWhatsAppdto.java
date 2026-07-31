@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MensajeWhatsAppDTO {
+public class MensajeWhatsAppdto {
 
     // Número del usuario que envia el mensaje
     // Lo suministra automaticamente WhatsApp Business

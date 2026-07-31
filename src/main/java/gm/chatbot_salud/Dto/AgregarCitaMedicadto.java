@@ -8,10 +8,11 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
-public class AgregarTensionDTO {
+public class AgregarCitaMedicadto {
     private String idIntegrante;
-    private Integer sistonica;
-    private Integer diatonica;
-    private LocalDate fecha;
+    private String tipoCita;
+    private String lugarCita;
+    private String direccion;
+    private LocalDate fechaCita;
     private LocalTime hora;
 }

@@ -1,5 +1,6 @@
 package gm.chatbot_salud.servicio;
 
+import gm.chatbot_salud.Excepciones.RecursoNoEncontradoExcepcion;
 import gm.chatbot_salud.modelo.Tension;
 import gm.chatbot_salud.repositorio.TensionRepositorio;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,9 @@ public class TensionServicio {
     }
 
     public Tension buscarPorId(String id) {
-        return tensionRepositorio.findById(id).orElse(null);
+        return tensionRepositorio.findById(id).
+                orElseThrow(() -> new RecursoNoEncontradoExcepcion
+                        ("Tension no encontrada"));
     }
 
     public Tension guardar(Tension tension) {

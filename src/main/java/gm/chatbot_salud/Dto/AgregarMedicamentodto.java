@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AgregarMedicamentoDTO {
+public class AgregarMedicamentodto {
     private String idIntegrante;
     private String nombreMedicamento;
     private String frecuencia;

@@ -1,5 +1,7 @@
 package gm.chatbot_salud.servicio;
 
+import gm.chatbot_salud.Excepciones.IntegranteNoEncontradoExcepcion;
+import gm.chatbot_salud.Excepciones.RecursoNoEncontradoExcepcion;
 import gm.chatbot_salud.modelo.Enfermedad;
 import gm.chatbot_salud.repositorio.EnfermedadRepositorio;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,24 @@ public class EnfermedadServicio {
     }
 
     public Enfermedad buscarPorId(String id) {
-        return enfermedadRepositorio.findById(id).orElse(null);
+        return enfermedadRepositorio.findById(id).
+                orElseThrow(() -> new RecursoNoEncontradoExcepcion
+                        ("Enfermedad no encontrad"));
     }
 
     public Enfermedad guardar(Enfermedad enfermedad) {
+
+        if(enfermedad.getNombreEnfermedad()==null ||
+                enfermedad.getNombreEnfermedad().isBlank()){
+
+            throw new IllegalArgumentException(
+                    "Debe ingresar el nombre de la enfermedad.");
+        }
+
+        if(enfermedad.getIntegrante()==null){
+            throw new IntegranteNoEncontradoExcepcion(
+                    "Debe seleccionar un integrante.");
+        }
         return enfermedadRepositorio.save(enfermedad);
     }
 

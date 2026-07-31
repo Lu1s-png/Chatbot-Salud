@@ -1,5 +1,6 @@
 package gm.chatbot_salud.servicio;
 
+import gm.chatbot_salud.Excepciones.FamiliaNoEncontradaExcepcion;
 import gm.chatbot_salud.modelo.Familia;
 import gm.chatbot_salud.repositorio.FamiliaRepositorio;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,16 @@ public class FamiliaServicio {
 
     // buscar
     public Familia buscarPorId(String id) {
-        return familiaRepositorio.findById(id).orElse(null);
+        return familiaRepositorio.findById(id).orElseThrow(()
+                -> new FamiliaNoEncontradaExcepcion("Familia no encontrada"));
     }
 
     // guardar
     public Familia guardar(Familia familia) {
+        if (familiaRepositorio.count() >= 1){
+            throw new RuntimeException("Solo Puede Existir una familia registrada.");
+        }
+
         return familiaRepositorio.save(familia);
     }
 

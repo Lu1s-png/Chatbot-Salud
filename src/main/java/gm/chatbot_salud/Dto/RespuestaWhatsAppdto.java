@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RespuestaWhatsAppDTO {
+public class RespuestaWhatsAppdto {
     private boolean exitoso;
     private String mensaje;
 }

@@ -1,5 +1,6 @@
 package gm.chatbot_salud.servicio;
 
+import gm.chatbot_salud.modelo.Integrante;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -7,7 +8,7 @@ public class WhatsAppServicio {
 
     private final IntegranteServicio integranteServicio;
 
-    public WhatsAppServicio(IntegranteServicio integranteServicio){
+    public WhatsAppServicio(IntegranteServicio integranteServicio) {
         this.integranteServicio = integranteServicio;
     }
 
@@ -20,19 +21,18 @@ public class WhatsAppServicio {
             return "No se recibió ningún mensaje.";
         }
 
-        mensaje = mensaje.trim().toLowerCase();
+        mensaje = mensaje.trim();
 
         // El chatbot solo responde si lo llaman
-        if (mensaje.equals("@chatbot")) {
+        if (mensaje.equalsIgnoreCase("@chatbot")) {
             return mostrarMenuPrincipal();
         }
 
-        // Comandos principales
-        switch (mensaje) {
+        switch (mensaje.toLowerCase()) {
 
             case "/agregar":
                 return mostrarMenuAgregar();
-                
+
             case "integrante":
                 return """
                         Escriba el nombre del nuevo integrante.
@@ -52,15 +52,33 @@ public class WhatsAppServicio {
                 return mostrarMenuConsultar();
 
             default:
-                if (mensaje.startsWith("agregar integrante")){
-                    String nombre = mensaje.substring(20).trim();
-                    
-                    return agregarIntegrante(nombre);
+
+                if (mensaje.toLowerCase().startsWith("agregar integrante")) {
+
+                    String nombre = mensaje.substring("agregar integrante".length()).trim();
+
+                    try {
+
+                        Integrante integrante =
+                                integranteServicio.agregarIntegrante(nombre);
+
+                        return """
+                                ✅ Integrante agregado correctamente.
+
+                                Nombre: %s
+                                """.formatted(integrante.getNombre());
+
+                    } catch (Exception e) {
+
+                        return "❌ " + e.getMessage();
+                    }
+
                 }
+
                 return """
-                        No entendi el comando.
-                        
-                        Escriban @chatbot para iniciar la conversación
+                        No entendí el comando.
+
+                        Escriba @chatbot para iniciar la conversación.
                         """;
         }
     }
@@ -89,7 +107,7 @@ public class WhatsAppServicio {
 
         return """
                 ¿Qué desea agregar?
-                
+
                 1. Integrante
                 2. Enfermedad
                 3. Medicamento

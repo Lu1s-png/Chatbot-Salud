@@ -1,5 +1,6 @@
 package gm.chatbot_salud.servicio;
 
+import gm.chatbot_salud.Excepciones.RecursoNoEncontradoExcepcion;
 import gm.chatbot_salud.modelo.CitaMedica;
 import gm.chatbot_salud.repositorio.CitaMedicaRepositorio;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,9 @@ public class CitaMedicaServicio {
     }
 
     public CitaMedica buscarPorId (String id){
-        return citaMedicaRepositorio.findById(id).orElse(null);
+        return citaMedicaRepositorio.findById(id).
+                orElseThrow(() -> new RecursoNoEncontradoExcepcion
+                        ("Cita medica no encontrada"));
     }
 
     public CitaMedica guardar (CitaMedica citaMedica){
